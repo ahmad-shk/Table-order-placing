@@ -58,7 +58,7 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {TABLES.map((tableNum) => (
-            <Link key={tableNum} href={`/order?table=${tableNum}`}>
+            // <Link key={tableNum} href={`/order?table=${tableNum}`}>
               <Card className="p-8 text-center cursor-pointer hover:shadow-xl transition-all hover:scale-105 h-full flex flex-col items-center justify-center bg-card border-2 border-transparent hover:border-blue-500">
                 <div className="text-sm font-semibold text-muted-foreground mb-4 uppercase tracking-widest">
                   Table {tableNum}
@@ -76,7 +76,7 @@ export default function HomePage() {
                 )}
                 <p className="text-sm text-muted-foreground">Click or scan QR code</p>
               </Card>
-            </Link>
+            // </Link>
           ))}
         </div>
 
