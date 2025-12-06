@@ -1,0 +1,86 @@
+export const MENU_ITEMS = [
+  {
+    id: "1",
+    name: "Hamburger",
+    price: 12,
+    category: "Main Course",
+  },
+  {
+    id: "2",
+    name: "New York Steak",
+    price: 28,
+    category: "Main Course",
+  },
+  {
+    id: "3",
+    name: "Grilled Chicken",
+    price: 18,
+    category: "Main Course",
+  },
+  {
+    id: "4",
+    name: "BBQ Ribs",
+    price: 24,
+    category: "Main Course",
+  },
+  {
+    id: "5",
+    name: "Fish & Chips",
+    price: 16,
+    category: "Main Course",
+  },
+  {
+    id: "6",
+    name: "Caesar Salad",
+    price: 11,
+    category: "Appetizers",
+  },
+  {
+    id: "7",
+    name: "Buffalo Wings",
+    price: 10,
+    category: "Appetizers",
+  },
+  {
+    id: "8",
+    name: "French Fries",
+    price: 5,
+    category: "Appetizers",
+  },
+  {
+    id: "9",
+    name: "Coca Cola",
+    price: 3,
+    category: "Beverages",
+  },
+  {
+    id: "10",
+    name: "Iced Tea",
+    price: 3,
+    category: "Beverages",
+  },
+  {
+    id: "11",
+    name: "Coffee",
+    price: 4,
+    category: "Beverages",
+  },
+  {
+    id: "12",
+    name: "Cheesecake",
+    price: 8,
+    category: "Desserts",
+  },
+  {
+    id: "13",
+    name: "Apple Pie",
+    price: 7,
+    category: "Desserts",
+  },
+  {
+    id: "14",
+    name: "Brownie",
+    price: 6,
+    category: "Desserts",
+  },
+]
