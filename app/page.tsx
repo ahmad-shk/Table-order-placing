@@ -74,7 +74,7 @@ export default function HomePage() {
                     <span className="text-muted-foreground">Loading...</span>
                   </div>
                 )}
-                <p className="text-sm text-muted-foreground">Click or scan QR code</p>
+                <p className="text-sm text-muted-foreground">scan QR code</p>
               </Card>
             // </Link>
           ))}
