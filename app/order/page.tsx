@@ -4,7 +4,7 @@ import { useSearchParams, useRouter } from "next/navigation"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { ShoppingCart, ArrowLeft } from "lucide-react"
+import { ShoppingCart, ArrowLeft, Trash2 } from "lucide-react"
 import { addOrder } from "@/lib/firestore"
 import { MenuSection } from "@/components/menu-section"
 import { useToast } from "@/hooks/use-toast"
@@ -78,7 +78,7 @@ export default function OrderPage() {
       )
 
       toast({
-        title: "Order Placed Successfully",
+        title: "✅ Order Placed Successfully",
         description: `Your order for table ${tableNumber} has been sent to the kitchen.`,
       })
 
@@ -108,16 +108,16 @@ export default function OrderPage() {
   const totalAmount = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
   return (
-    <div className="min-h-screen bg-background p-4">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-green-50 dark:to-green-950 p-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <Button variant="ghost" size="sm" onClick={() => router.push("/")} className="mb-4">
+          <Button variant="ghost" size="sm" onClick={() => router.push("/")} className="mb-4 hover:bg-muted">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Tables
           </Button>
-          <div className="inline-block bg-blue-100 dark:bg-blue-900 px-4 py-2 rounded-full mb-4">
-            <p className="text-blue-900 dark:text-blue-100 font-semibold">Table {tableNumber}</p>
+          <div className="inline-block bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full mb-4 font-semibold">
+            🪑 Table {tableNumber}
           </div>
           <h1 className="text-4xl font-bold text-foreground">Select Items</h1>
           <p className="text-muted-foreground mt-2">Browse our menu and add items to your order</p>
@@ -136,8 +136,8 @@ export default function OrderPage() {
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <Card className="p-6 sticky top-4">
-              <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+            <Card className="p-6 sticky top-4 shadow-lg border-2 border-blue-200 dark:border-blue-800">
+              <h2 className="text-lg font-semibold mb-4 flex items-center gap-2 text-foreground">
                 <ShoppingCart className="w-5 h-5" />
                 Order Summary
               </h2>
@@ -146,16 +146,30 @@ export default function OrderPage() {
                 <>
                   <div className="space-y-3 mb-6 max-h-96 overflow-y-auto">
                     {items.map((item) => (
-                      <div key={item.menuItemId} className="flex justify-between items-center text-sm">
-                        <div>
+                      <div
+                        key={item.menuItemId}
+                        className="flex justify-between items-center text-sm bg-muted p-3 rounded-lg hover:bg-muted/80 transition-colors group"
+                      >
+                        <div className="flex-1">
                           <p className="font-medium text-foreground">{item.name}</p>
                           <p className="text-xs text-muted-foreground">
                             {item.quantity} x € {(item.price * RUPEE_TO_EURO).toFixed(2)}
                           </p>
                         </div>
-                        <p className="font-semibold text-foreground">
-                          € {(item.quantity * item.price * RUPEE_TO_EURO).toFixed(2)}
-                        </p>
+                        <div className="flex items-center gap-2">
+                          <p className="font-semibold text-foreground">
+                            € {(item.quantity * item.price * RUPEE_TO_EURO).toFixed(2)}
+                          </p>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleRemoveItem(item.menuItemId)}
+                            className="text-red-500 hover:text-red-700 hover:bg-red-100 dark:hover:bg-red-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
+                            title="Delete item"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -163,19 +177,32 @@ export default function OrderPage() {
                   <div className="border-t border-border pt-4 mb-4">
                     <div className="flex justify-between items-center mb-4">
                       <span className="font-semibold text-foreground">Total:</span>
-                      <span className="text-2xl font-bold text-foreground">
+                      <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">
                         € {(totalAmount * RUPEE_TO_EURO).toFixed(2)}
                       </span>
                     </div>
-                    <Button onClick={placeOrder} disabled={loading} className="w-full h-12 text-lg">
-                      {loading ? "Placing Order..." : "Place Order"}
+                    <Button
+                      onClick={placeOrder}
+                      disabled={loading}
+                      className="w-full h-12 text-lg bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold"
+                    >
+                      {loading ? "🔄 Placing Order..." : "✓ Place Order"}
                     </Button>
                   </div>
+
+                  <Button
+                    variant="outline"
+                    onClick={() => setItems([])}
+                    className="w-full text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
+                  >
+                    Clear Cart
+                  </Button>
                 </>
               ) : (
                 <div className="text-center py-8">
                   <ShoppingCart className="w-12 h-12 text-muted-foreground mx-auto mb-3 opacity-50" />
                   <p className="text-sm text-muted-foreground">No items selected yet</p>
+                  <p className="text-xs text-muted-foreground mt-2">Add items from the menu to get started</p>
                 </div>
               )}
             </Card>

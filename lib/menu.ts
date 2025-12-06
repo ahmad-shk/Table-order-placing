@@ -2,85 +2,85 @@ export const MENU_ITEMS = [
   {
     id: "1",
     name: "Hamburger",
-    price: 12,
+    price: 18, // Increased from 12 to 18
     category: "Main Course",
   },
   {
     id: "2",
     name: "New York Steak",
-    price: 28,
+    price: 42, // Increased from 28 to 42
     category: "Main Course",
   },
   {
     id: "3",
     name: "Grilled Chicken",
-    price: 18,
+    price: 27, // Increased from 18 to 27
     category: "Main Course",
   },
   {
     id: "4",
     name: "BBQ Ribs",
-    price: 24,
+    price: 36, // Increased from 24 to 36
     category: "Main Course",
   },
   {
     id: "5",
     name: "Fish & Chips",
-    price: 16,
+    price: 24, // Increased from 16 to 24
     category: "Main Course",
   },
   {
     id: "6",
     name: "Caesar Salad",
-    price: 11,
+    price: 17, // Increased from 11 to 17
     category: "Appetizers",
   },
   {
     id: "7",
     name: "Buffalo Wings",
-    price: 10,
+    price: 15, // Increased from 10 to 15
     category: "Appetizers",
   },
   {
     id: "8",
     name: "French Fries",
-    price: 5,
+    price: 8, // Increased from 5 to 8
     category: "Appetizers",
   },
   {
     id: "9",
     name: "Coca Cola",
-    price: 3,
+    price: 5, // Increased from 3 to 5
     category: "Beverages",
   },
   {
     id: "10",
     name: "Iced Tea",
-    price: 3,
+    price: 5, // Increased from 3 to 5
     category: "Beverages",
   },
   {
     id: "11",
     name: "Coffee",
-    price: 4,
+    price: 6, // Increased from 4 to 6
     category: "Beverages",
   },
   {
     id: "12",
     name: "Cheesecake",
-    price: 8,
+    price: 12, // Increased from 8 to 12
     category: "Desserts",
   },
   {
     id: "13",
     name: "Apple Pie",
-    price: 7,
+    price: 11, // Increased from 7 to 11
     category: "Desserts",
   },
   {
     id: "14",
     name: "Brownie",
-    price: 6,
+    price: 9, // Increased from 6 to 9
     category: "Desserts",
   },
 ]
