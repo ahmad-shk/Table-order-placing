@@ -31,7 +31,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-blue-50 dark:to-blue-950 p-4">
       <div className="max-w-6xl mx-auto">
         {/* Firebase Status Banner */}
-        <div className="mb-8 p-4 rounded-lg border flex items-center gap-3 bg-card">
+        {/* <div className="mb-8 p-4 rounded-lg border flex items-center gap-3 bg-card">
           {isConnected ? (
             <>
               <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
@@ -49,7 +49,7 @@ export default function HomePage() {
               </div>
             </>
           )}
-        </div>
+        </div> */}
 
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold text-foreground mb-2">🍽️ Restaurant Ordering</h1>
