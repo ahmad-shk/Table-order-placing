@@ -11,6 +11,9 @@ import { useToast } from "@/hooks/use-toast"
 import { Toaster } from "@/components/ui/toaster"
 import type { OrderItem } from "@/lib/types"
 
+import { useLanguage } from "@/lib/language-context"
+import { getTranslation } from "@/lib/translations"
+
 const RUPEE_TO_EURO = 0.012
 
 export default function OrderPage() {
@@ -18,6 +21,9 @@ export default function OrderPage() {
   const router = useRouter()
   const { toast } = useToast()
   const tableNumber = Number.parseInt(searchParams.get("table") || "0")
+
+  const { language } = useLanguage()
+  const t = (key: string) => getTranslation(language, key as any)
 
   const [items, setItems] = useState<OrderItem[]>([])
   const [loading, setLoading] = useState(false)
@@ -52,10 +58,6 @@ export default function OrderPage() {
     try {
       const totalAmount = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
-      console.log("[v0] Placing order with items:", items)
-      console.log("[v0] Table number:", tableNumber)
-      console.log("[v0] Total amount:", totalAmount)
-
       const orderId = await addOrder({
         tableNumber,
         items,
@@ -64,8 +66,6 @@ export default function OrderPage() {
         createdAt: Date.now(),
         updatedAt: Date.now(),
       })
-
-      console.log("[v0] Order placed successfully with ID:", orderId)
 
       sessionStorage.setItem(
         "lastOrder",
@@ -78,8 +78,8 @@ export default function OrderPage() {
       )
 
       toast({
-        title: "✅ Order Placed Successfully",
-        description: `Your order for table ${tableNumber} has been sent to the kitchen.`,
+        title: t("Order_toastSuccessTitle"),
+        description: t("Order_toastSuccessDesc") + " " + tableNumber,
       })
 
       setItems([])
@@ -88,11 +88,10 @@ export default function OrderPage() {
         router.push(`/order-confirmation?orderId=${orderId}`)
       }, 1500)
     } catch (error) {
-      console.error("[v0] Error placing order:", error)
-      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred"
+      const errorMessage = error instanceof Error ? error.message : t("Order_unknownError")
 
       toast({
-        title: "Error",
+        title: t("Order_error"),
         description: errorMessage,
         variant: "destructive",
       })
@@ -101,9 +100,7 @@ export default function OrderPage() {
     }
   }
 
-  if (tableNumber === 0) {
-    return null
-  }
+  if (tableNumber === 0) return null
 
   const totalAmount = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
@@ -114,13 +111,15 @@ export default function OrderPage() {
         <div className="mb-8">
           <Button variant="ghost" size="sm" onClick={() => router.push("/")} className="mb-4 hover:bg-muted">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Tables
+            {t("Order_backToTables")}
           </Button>
+
           <div className="inline-block bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full mb-4 font-semibold">
-            🪑 Table {tableNumber}
+            🪑 {t("Order_table")} {tableNumber}
           </div>
-          <h1 className="text-4xl font-bold text-foreground">Select Items</h1>
-          <p className="text-muted-foreground mt-2">Browse our menu and add items to your order</p>
+
+          <h1 className="text-4xl font-bold text-foreground">{t("Order_selectItems")}</h1>
+          <p className="text-muted-foreground mt-2">{t("Order_browseMenu")}</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -139,7 +138,7 @@ export default function OrderPage() {
             <Card className="p-6 sticky top-4 shadow-lg border-2 border-blue-200 dark:border-blue-800">
               <h2 className="text-lg font-semibold mb-4 flex items-center gap-2 text-foreground">
                 <ShoppingCart className="w-5 h-5" />
-                Order Summary
+                {t("Order_summary")}
               </h2>
 
               {items.length > 0 ? (
@@ -165,7 +164,7 @@ export default function OrderPage() {
                             size="sm"
                             onClick={() => handleRemoveItem(item.menuItemId)}
                             className="text-red-500 hover:text-red-700 hover:bg-red-100 dark:hover:bg-red-900/20 opacity-0 group-hover:opacity-100 transition-opacity"
-                            title="Delete item"
+                            title={t("Order_deleteItem")}
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>
@@ -176,7 +175,7 @@ export default function OrderPage() {
 
                   <div className="border-t border-border pt-4 mb-4">
                     <div className="flex justify-between items-center mb-4">
-                      <span className="font-semibold text-foreground">Total:</span>
+                      <span className="font-semibold text-foreground">{t("Order_total")}</span>
                       <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">
                         € {(totalAmount * RUPEE_TO_EURO).toFixed(2)}
                       </span>
@@ -186,7 +185,7 @@ export default function OrderPage() {
                       disabled={loading}
                       className="w-full h-12 text-lg bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-semibold"
                     >
-                      {loading ? "🔄 Placing Order..." : "✓ Place Order"}
+                      {loading ? t("Order_placingOrder") : t("Order_placeOrder")}
                     </Button>
                   </div>
 
@@ -195,14 +194,14 @@ export default function OrderPage() {
                     onClick={() => setItems([])}
                     className="w-full text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
                   >
-                    Clear Cart
+                    {t("Order_clearCart")}
                   </Button>
                 </>
               ) : (
                 <div className="text-center py-8">
                   <ShoppingCart className="w-12 h-12 text-muted-foreground mx-auto mb-3 opacity-50" />
-                  <p className="text-sm text-muted-foreground">No items selected yet</p>
-                  <p className="text-xs text-muted-foreground mt-2">Add items from the menu to get started</p>
+                  <p className="text-sm text-muted-foreground">{t("Order_noItems")}</p>
+                  <p className="text-xs text-muted-foreground mt-2">{t("Order_addItems")}</p>
                 </div>
               )}
             </Card>
