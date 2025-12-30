@@ -129,7 +129,7 @@ export function MenuSection({ items, onAddItem, onUpdateQuantity, onRemoveItem }
                       />
                       <div className="absolute top-2 right-2">
                         <span className="bg-background/80 backdrop-blur-md px-3 py-1 rounded-full text-sm font-bold text-blue-600 shadow-sm">
-                          Rs {menuItem.price}
+                          € {menuItem.price}
                         </span>
                       </div>
                     </div>

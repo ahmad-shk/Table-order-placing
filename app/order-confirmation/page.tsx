@@ -50,7 +50,7 @@ export default function OrderConfirmationPage() {
     )
   }
 
-  const totalInEuros = (orderData.totalAmount * RUPEE_TO_EURO).toFixed(2)
+  const totalInEuros = (orderData.totalAmount).toFixed(2)
 
   return (
     <div className="min-h-screen bg-background p-4">
@@ -105,7 +105,7 @@ export default function OrderConfirmationPage() {
                   </div>
                   <div className="text-right">
                     <p className="font-semibold text-foreground">
-                      € {(item.price * item.quantity * RUPEE_TO_EURO).toFixed(2)}
+                      € {(item.price * item.quantity).toFixed(2)}
                     </p>
                   </div>
                 </div>
@@ -136,7 +136,7 @@ export default function OrderConfirmationPage() {
         </Card>
 
         {/* Navigation Buttons */}
-        <div className="grid grid-cols-2 gap-4">
+        {/* <div className="grid grid-cols-2 gap-4">
           <Button
             onClick={() => {
               sessionStorage.removeItem("lastOrder")
@@ -158,7 +158,7 @@ export default function OrderConfirmationPage() {
           >
             {t("OrderConfirm_newOrder")}
           </Button>
-        </div>
+        </div> */}
       </div>
     </div>
   )

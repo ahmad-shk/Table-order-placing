@@ -152,12 +152,12 @@ export default function OrderPage() {
                         <div className="flex-1">
                           <p className="font-medium text-foreground">{item.name}</p>
                           <p className="text-xs text-muted-foreground">
-                            {item.quantity} x € {(item.price * RUPEE_TO_EURO).toFixed(2)}
+                            {item.quantity} x € {(item.price).toFixed(2)}
                           </p>
                         </div>
                         <div className="flex items-center gap-2">
                           <p className="font-semibold text-foreground">
-                            € {(item.quantity * item.price * RUPEE_TO_EURO).toFixed(2)}
+                            € {(item.quantity * item.price).toFixed(2)}
                           </p>
                           <Button
                             variant="ghost"
@@ -177,7 +177,7 @@ export default function OrderPage() {
                     <div className="flex justify-between items-center mb-4">
                       <span className="font-semibold text-foreground">{t("Order_total")}</span>
                       <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">
-                        € {(totalAmount * RUPEE_TO_EURO).toFixed(2)}
+                        € {(totalAmount).toFixed(2)}
                       </span>
                     </div>
                     <Button
